@@ -1,2 +1,2 @@
 # openmp_assignment
-¯\_(ツ)_/¯
+¯\\_(ツ)_/¯
