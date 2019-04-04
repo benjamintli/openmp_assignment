@@ -3,21 +3,20 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include "dotprod.h"
-
-#define NUM_THREADS 100
-#define VECTOR 100
+//#define NUM_THREADS 10
+#define VECTOR 10000
 
 int main(int argc, char *argv[])
 {
-    int nthreads = NUM_THREADS, tid, i, len=VECTOR;
+    int tid, i, len=VECTOR;
     double *a, *b;
     DOT_STRUCT dot;
     double partialSum, sum = 0;
     struct timeval tv1, tv2;
-    a = (double *)malloc(len * nthreads * sizeof(double));
-    b = (double *)malloc(len * nthreads * sizeof(double));
+    a = (double *)malloc(len * sizeof(double));
+    b = (double *)malloc(len * sizeof(double));
 
-    for (i = 0; i < (len * nthreads); i++)
+    for (i = 0; i < (len ); i++)
     {
         a[i] = 1.0;
         b[i] = a[i];
@@ -31,7 +30,7 @@ int main(int argc, char *argv[])
         partialSum = 0.0;
         tid = omp_get_thread_num();
 #pragma omp for reduction(+:sum)
-        for (i = 0; i <  len * nthreads; i++)
+        for (i = 0; i <  len ; i++)
         {
             sum += (a[i] * b[i]);
             partialSum = sum;

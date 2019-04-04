@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include "dotprod.h"
-
-#define NUM_THREADS 6
+#define NUM_THREADS 64 
 #define VECTOR 10000
 DOT_STRUCT dot;
 pthread_t threads[NUM_THREADS];
@@ -13,7 +12,7 @@ pthread_mutex_t mutexsum;
 double serial_dot(DOT_STRUCT dot_s)
 {
     int i;
-    for (i = 0; i < (VECTOR); i++)
+    for (i = 0; i < (NUM_THREADS * VECTOR); i++)
     {
         dot.sum += (dot.a[i] * dot.b[i]);
     }
@@ -46,9 +45,8 @@ int main(int argc, char *argv[])
     pthread_attr_t attr;
     time_t t;
     struct timeval tv1, tv2;
-
     a = (double *)malloc(NUM_THREADS * VECTOR * sizeof(double));
-    b = (double *)malloc(NUM_THREADS * VECTOR * sizeof(double));
+    b = (double *)malloc(NUM_THREADS * VECTOR * sizeof(double)); 
 
     int i;
     for (i = 0; i < VECTOR; i++)
