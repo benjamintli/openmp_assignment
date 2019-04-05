@@ -33,19 +33,21 @@ int main(int argc, char *argv[])
     omp_set_num_threads(THREAD);
     double start = omp_get_wtime();
 
-#pragma omp parallel for private(i, j) reduction(+:c[:ROW]) 
+#pragma omp parallel for private(i, j) reduction(+:temp)
     for (i = 0; i < ROW; i++)
     {
         for (j = 0; j < COL; j++)
         {
-            c[i] = c[i] +  (*(A + i * COL + j))  * b[j];
+            temp = temp +  (*(A + i * COL + j))  * b[j];
         }
+        c[i] = temp;
+        temp = 0;
     }
     printf("Thread timer for OpenMP: %f nanosecond\n", (omp_get_wtime() - start) * 1000000000);
-    // for (i = 0; i < ROW; i++)
-    // {
-    //     printf("c[%i]=%f \n", i, c[i]);
-    // }
+    for (i = 0; i < ROW; i++)
+    {
+        printf("c[%i]=%f \n", i, c[i]);
+    }
 
     return 0;
 }

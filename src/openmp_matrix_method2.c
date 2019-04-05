@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     omp_set_dynamic(0);     // Explicitly disable dynamic teams
     omp_set_num_threads(THREAD);
     double start = omp_get_wtime();
-#pragma omp parallel for
+#pragma omp parallel for private (i, j)
     for (i = 0; i < ROW; i++)
     {
         for (j = 0; j < COL; j++)
@@ -40,10 +40,10 @@ int main(int argc, char *argv[])
         }
     }
     printf("Thread timer for OpenMP: %f nanosecond\n", (omp_get_wtime() - start) *1000000000) ;
-    // for (i = 0; i < ROW; i++)
-    // {
-    //     printf("c[%i]=%f \n", i, c[i]);
-    // }
+    for (i = 0; i < ROW; i++)
+    {
+        printf("c[%i]=%f \n", i, c[i]);
+    }
 
     return 0;
 }
