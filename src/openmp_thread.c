@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
         tid = omp_get_thread_num();
 #pragma omp for reduction(+ \
                           : sum)
-        for (i = 0; i < len * nthreads; i++)
+        for (i = 0; i < len ; i++)
         {
             sum += (a[i] * b[i]);
             partialSum = sum;

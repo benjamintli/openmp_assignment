@@ -37,13 +37,13 @@ int main(int argc, char *argv[])
     char *thread = argv[2];
     int VECTOR = atoi(vec_len);
     int NUM_THREADS = atoi(thread);
-    pthread_t *threads = malloc(NUM_THREADS * sizeof(pthread_t));
+    pthread_t *threads = (pthread_t*)malloc(NUM_THREADS * sizeof(pthread_t));
 
     a = (double *)malloc(NUM_THREADS * VECTOR * sizeof(double));
     b = (double *)malloc(NUM_THREADS * VECTOR * sizeof(double));
 
     int i;
-    for (i = 0; i < VECTOR; i++)
+    for (i = 0; i < (VECTOR); i++)
     {
         a[i] = 1;
         b[i] = a[i];
